@@ -1,0 +1,98 @@
+// Override Bootstrap default variables here
+// Do not edit any of the files in /vendor/bootstrap/scss/!
+
+// Grid Variables
+// Bootstrap Grid Overrides
+$grid-columns: 12;
+$grid-gutter-width: 10px;
+
+// Color Variables
+// Bootstrap Color Overrides
+
+$white: #fff !default;
+$gray-100: #f8f9fc !default;
+$gray-200: #eaecf4 !default;
+$gray-300: #dddfeb !default;
+$gray-400: #d1d3e2 !default;
+$gray-500: #b7b9cc !default;
+$gray-600: #858796 !default;
+$gray-700: #6e707e !default;
+$gray-800: #5a5c69 !default;
+$gray-900: #3a3b45 !default;
+$black: #000 !default;
+
+$blue: #007bff !default;
+$indigo: #122639 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #f01515 !default;
+$orange: #fd7e14 !default;
+$yellow: #FFCE00 !default;
+$green: #28a745 !default;
+$teal: #20c997 !default;
+$cyan: #17BAD0 !default;
+
+$primary: $red !default;
+$secondary: $black !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+// Options
+$enable-caret: true !default;
+$enable-rounded: true !default;
+$enable-shadows: false !default;
+$enable-gradients: false !default;
+$enable-transitions: true !default;
+$enable-prefers-reduced-motion-media-query: true !default;
+$enable-grid-classes: true !default;
+$enable-pointer-cursor-for-buttons: true !default;
+$enable-print-styles: true !default;
+$enable-responsive-font-sizes: false !default;
+$enable-validation-icons: true !default;
+$enable-deprecation-messages: true !default;
+
+// Spacing
+$spacer: 1rem !default;
+
+// Body
+$body-bg: $white !default;
+$body-color: $black !default;
+
+// Links
+$link-color: $red !default;
+
+// Grid columns
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+
+// Fonts
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-xxl: $font-size-base * 2.5 !default;
+$font-size-xl: $font-size-base * 2 !default;
+$font-size-lg: $font-size-base * 1.5 !default;
+$font-size-md: $font-size-base * 1.25 !default;
+$font-size-sm: $font-size-base * .875 !default;
+
+$font-family-sans-serif: 'Roboto Sans', Helvetica, Arial, sans-serif !default;
+$headings-font-weight: 400 !default;
+$headings-font-family: 'Roboto Sans', Helvetica, Arial, sans-serif !default;
+$headings-font-weight: 700;
+$headings-color: $red;
+
+$h1-font-size: $font-size-xxl !default;
+$h2-font-size: $font-size-xl !default;
+$h3-font-size: $font-size-lg !default;
+$h4-font-size: $font-size-md !default;
+$h5-font-size: $font-size-base !default;
+$h6-font-size: $font-size-base !default;
+
+$line-height-base: 1.5 !default;
+$line-height-xxl: $line-height-base * 1.8 !default;
+$line-height-xl: $line-height-base * 1.6 !default;
+$line-height-lg: $line-height-base * 1.4 !default;
+$line-height-md: $line-height-base * 1.2 !default;
+$line-height-sm: $line-height-base / 1.2 !default;
