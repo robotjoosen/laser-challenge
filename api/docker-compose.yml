@@ -18,11 +18,12 @@ services:
     working_dir: /application
     volumes:
       - .:/application
+      - ./docker/mysql:/tmp/database
     env_file:
       - .env
     ports:
       - "8082:3306"
-    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+    command: mysqld --init-file="/tmp/mysql/install_db.sql" --sql-mode=NO_ENGINE_SUBSTITUTION
 
   php-fpm:
     build: docker/php-fpm
