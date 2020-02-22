@@ -1,0 +1,15 @@
+.card {
+	border: 0;
+	border-radius: $border-radius;
+
+	&-header {
+		background: $gray-700;
+		border: 0;
+		border-radius: $border-radius $border-radius 0 0;
+	}
+
+	&-body {
+		background: $gray-200;
+		border-radius: 0 0 $border-radius $border-radius;
+	}
+}

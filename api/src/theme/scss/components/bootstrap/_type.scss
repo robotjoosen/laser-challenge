@@ -1,0 +1,18 @@
+h1, .h1 {
+	text-transform: uppercase;
+	-webkit-text-stroke: 2px $red;
+	-webkit-text-fill-color: white;
+	text-shadow: 0 0 10px $blue;
+}
+
+.display {
+	&-1 {
+		font-family: "VT323", Helvetica, Arial, sans-serif;
+		font-size: $font-size-xxl * 4;
+		background: $gray-300;
+		border-radius: $border-radius-lg;
+		color: $gray-800;
+		display: inline-block;
+		padding: 0 5%;
+	}
+}

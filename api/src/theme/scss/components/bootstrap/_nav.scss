@@ -1,0 +1,19 @@
+.nav {
+	&-tabs {
+		.nav {
+			&-item {
+				margin-bottom: 0;
+			}
+
+			&-link {
+				border: 0;
+				color: $white;
+
+				&.active {
+					background: $yellow;
+					color: darken($yellow,30);
+				}
+			}
+		}
+	}
+}

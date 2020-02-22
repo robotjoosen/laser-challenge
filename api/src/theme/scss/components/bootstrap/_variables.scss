@@ -59,7 +59,7 @@ $enable-deprecation-messages: true !default;
 $spacer: 1rem !default;
 
 // Body
-$body-bg: $white !default;
+$body-bg: $gray-400 !default;
 $body-color: $black !default;
 
 // Links
@@ -77,13 +77,13 @@ $font-size-lg: $font-size-base * 1.5 !default;
 $font-size-md: $font-size-base * 1.25 !default;
 $font-size-sm: $font-size-base * .875 !default;
 
-$font-family-sans-serif: 'Roboto Sans', Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif: 'Titillium Web', Helvetica, Arial, sans-serif !default;
 $headings-font-weight: 400 !default;
-$headings-font-family: 'Roboto Sans', Helvetica, Arial, sans-serif !default;
+$headings-font-family: 'Teko', Helvetica, Arial, sans-serif !default;
 $headings-font-weight: 700;
 $headings-color: $red;
 
-$h1-font-size: $font-size-xxl !default;
+$h1-font-size: $font-size-xxl * 1.5 !default;
 $h2-font-size: $font-size-xl !default;
 $h3-font-size: $font-size-lg !default;
 $h4-font-size: $font-size-md !default;
