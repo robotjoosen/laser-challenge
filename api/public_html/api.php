@@ -23,6 +23,10 @@ $router->group('api/device', function (RouteGroup $router) {
 
 $router->group('api/game', function (RouteGroup $router) {
     $router->map('GET', '/', [Controller\Game::class, 'index']);
+    $router->map('GET', 'score', [Controller\Game::class, 'listGames']);
+    $router->map('GET', 'start', [Controller\Game::class, 'addGame']);
+    $router->map('GET', '{alias}', [Controller\Game::class, 'getStatus']);
+    $router->map('POST', '{alias}', [Controller\Game::class, 'updateGame']);
 });
 
 /**

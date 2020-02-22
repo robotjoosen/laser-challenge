@@ -15,7 +15,11 @@ class GameController extends Controller {
 		super();
 		this.devices = [];
 		this.games = [];
-		this.current_game = 0;
+		this.current_game = {
+			id: 0,
+			score: {}
+		};
+		this.stats = [];
 		this.timer = 0;
 		this.interval = {};
 		this.getDevices();
@@ -24,6 +28,16 @@ class GameController extends Controller {
 	}
 
 	initGame() {
+
+		// restart timer
+		this.timer = 0;
+
+		// clear intervals
+		for (let key in this.interval) {
+			clearInterval(this.interval[key]);
+		}
+
+		// render view
 		let template = document.getElementById('game-panel-begin-tmpl');
 		let target = document.getElementById('game-panel');
 		this.renderTmpl(target, template);
@@ -57,16 +71,8 @@ class GameController extends Controller {
 	 * Start game
 	 */
 	startGame() {
-
 		this.interval.timer = window.setInterval(this.gameTimer.bind(this), 10);
-		this.interval.score = window.setInterval(this.checkGameScore().bind(this), 2000);
-	}
-
-	/**
-	 * Game Count Down
-	 */
-	gameCountDown() {
-
+		this.interval.score = window.setInterval(this.checkGameState.bind(this), 2000);
 	}
 
 	/**
@@ -75,25 +81,49 @@ class GameController extends Controller {
 	gameTimer() {
 		let template = document.getElementById('game-panel-play-tmpl');
 		let target = document.getElementById('game-panel');
-		let data = {timer: this.timer.toFixed(2)};
+		let d = new Date(this.timer * 1000);
+		let data = this.stats;
+		data.timer = String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0') + ':' + Math.floor(d.getMilliseconds() / 10).toFixed(0).padStart(2, '0');
 		this.renderTmpl(target, template, data);
 		this.timer += 0.01;
 	}
 
 	/**
-	 * Check device status
+	 * Check game status
 	 */
-	checkGameScore() {
+	checkGameState() {
 		if (this.current_game.hasOwnProperty('score')) {
 			let id = this.current_game.id;
-			Axios.get(`/api/game/${id}/score`)
+			Axios.get(`/api/game/${id}`)
 				.then(response => {
-					console.log(response);
+					let data = response.data;
+					let d = new Date(data.stats.total_time * 1000);
+					data.stats.display_time = String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0') + ':' + Math.floor(d.getMilliseconds() / 10).toFixed(0).padStart(2, '0');
+					this.stats = data;
+					if (response.data.stats.devices_hit === this.devices.length) {
+						clearInterval(this.interval.timer);
+						clearInterval(this.interval.score);
+						let template = document.getElementById('game-panel-end-tmpl');
+						let target = document.getElementById('game-panel');
+						this.renderTmpl(target, template, data);
+						Axios.post(`/api/game/${id}`, {'endtime': data.stats.last_hit})
+							.then(response => {
+								console.debug('End of game is set');
+							})
+							.catch(error => {
+								console.warn(error);
+							});
+
+					}
 				})
 				.catch(error => {
 					console.warn(error);
 				});
 		}
+	}
+
+	storeGame() {
+		return Axios.get('/api/game/start');
 	}
 
 	/**
@@ -110,21 +140,33 @@ class GameController extends Controller {
 	 */
 	eventListeners() {
 		document.addEventListener('click', event => {
+
+			// start game
 			if (event.target.id === 'game-start') {
-				let restart_promises = [];
+				let setup_promises = [];
 				for (let key in this.devices) {
 					if (this.devices.hasOwnProperty(key)) {
-						restart_promises.push(this.restartDevice(this.devices[key].ip));
+						setup_promises.push(this.restartDevice(this.devices[key].ip));
 					}
 				}
-				Promise.all(restart_promises)
+				setup_promises.push(this.storeGame());
+				Promise.all(setup_promises)
 					.then(response => {
-						console.log(response);
+						Object.keys(response).forEach(key => {
+							if (response[key].config.url === '/api/game/start') {
+								this.current_game.id = response[key].data.id;
+							}
+						});
 						this.startGame();
 					})
 					.catch(error => {
 						console.warn(error);
 					});
+			}
+
+			// restart
+			if (event.target.id === 'game-restart') {
+				this.initGame();
 			}
 		});
 	}
