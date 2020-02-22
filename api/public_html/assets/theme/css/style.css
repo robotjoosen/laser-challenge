@@ -25,7 +25,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Roboto Sans", Helvetica, Arial, sans-serif;
+  --font-family-sans-serif: "Titillium Web", Helvetica, Arial, sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 *,
@@ -44,13 +44,13 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #000;
   text-align: left;
-  background-color: #fff; }
+  background-color: #d1d3e2; }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -293,13 +293,13 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
+  font-family: "Teko", Helvetica, Arial, sans-serif;
   font-weight: 700;
   line-height: 1.2;
   color: #f01515; }
 
 h1, .h1 {
-  font-size: 2.5rem; }
+  font-size: 3.75rem; }
 
 h2, .h2 {
   font-size: 2rem; }
@@ -390,7 +390,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #fff;
+  background-color: #d1d3e2;
   border: 1px solid #dddfeb;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -2885,11 +2885,11 @@ input[type="button"].btn-block {
   .custom-range:focus {
     outline: none; }
     .custom-range:focus::-webkit-slider-thumb {
-      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
+      box-shadow: 0 0 0 1px #d1d3e2, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
     .custom-range:focus::-moz-range-thumb {
-      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
+      box-shadow: 0 0 0 1px #d1d3e2, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
     .custom-range:focus::-ms-thumb {
-      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
+      box-shadow: 0 0 0 1px #d1d3e2, 0 0 0 0.2rem rgba(240, 21, 21, 0.25); }
   .custom-range::-moz-focus-outer {
     border: 0; }
   .custom-range::-webkit-slider-thumb {
@@ -3029,8 +3029,8 @@ input[type="button"].btn-block {
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-item.show .nav-link {
     color: #6e707e;
-    background-color: #fff;
-    border-color: #dddfeb #dddfeb #fff; }
+    background-color: #d1d3e2;
+    border-color: #dddfeb #dddfeb #d1d3e2; }
   .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
@@ -4303,7 +4303,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -4388,7 +4388,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -7193,3 +7193,39 @@ a.text-dark:hover, a.text-dark:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dddfeb; } }
+
+h1, .h1 {
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px #f01515;
+  -webkit-text-fill-color: white;
+  text-shadow: 0 0 10px #007bff; }
+
+.display-1 {
+  font-family: "VT323", Helvetica, Arial, sans-serif;
+  font-size: 10rem;
+  background: #dddfeb;
+  border-radius: 0.3rem;
+  color: #5a5c69;
+  display: inline-block;
+  padding: 0 5%; }
+
+.card {
+  border: 0;
+  border-radius: 0.25rem; }
+  .card-header {
+    background: #6e707e;
+    border: 0;
+    border-radius: 0.25rem 0.25rem 0 0; }
+  .card-body {
+    background: #eaecf4;
+    border-radius: 0 0 0.25rem 0.25rem; }
+
+.nav-tabs .nav-item {
+  margin-bottom: 0; }
+
+.nav-tabs .nav-link {
+  border: 0;
+  color: #fff; }
+  .nav-tabs .nav-link.active {
+    background: #FFCE00;
+    color: #665200; }
