@@ -2,6 +2,7 @@
 
 namespace Robotjoosen\Lasertag\API\Controller;
 
+use DateTime;
 use Exception;
 use Robotjoosen\Lasertag\API;
 use Psr\Http\Message\ResponseInterface;
@@ -58,19 +59,24 @@ class Game extends API\Controller
                     $hits['raw'][] = $log;
                 }
 
+                // create datetimes
+                $end_time = new DateTime($game['endtime']);
+                $start_time = new DateTime($game['starttime']);
+
                 // setup up response
                 $response['games'][] = [
                     'id' => $game['id'],
                     'name' => $game['name'],
                     'start_time' => $game['starttime'],
                     'end_time' => $game['endtime'],
-                    'total_time' => strtotime($game['endtime']) - strtotime($game['starttime']),
+                    'total_time' => abs($end_time->format('U.u') - $start_time->format('U.u')),
                     'raw' => $hits['raw'],
                     'devices' => count(array_unique($hits['devices'])),
                     'hits' => count(array_unique($hits['hits']))
                 ];
 
             }
+            $response['games'] = array_reverse($response['games']);
 
             // Return response
             $this->response->getBody()->write(
@@ -92,10 +98,15 @@ class Game extends API\Controller
     {
         try {
 
+            // get start time
+            $t = microtime(true);
+            $micro = sprintf("%06d", ($t - floor($t)) * 1000000);
+            $d = new DateTime(date('Y-m-d H:i:s.' . $micro, $t));
+
             // add game to database
             $response = [
                 'name' => md5(time()),
-                'starttime' => date('Y-m-d H:i:s', time())
+                'starttime' => $d->format("Y-m-d H:i:s.u")
             ];
             if ($this->database->insert('game', $response)) {
                 $response['id'] = $this->database->id();
@@ -133,11 +144,9 @@ class Game extends API\Controller
             );
 
             // update
-            $response['endtime'] = date('Y-m-d H:i:s', $params['endtime']);
-            if ($this->database->update('game', [
-                'endtime' => date('Y-m-d H:i:s', $params['endtime'])
-            ], ['id' => $params['alias']])) {
+            if ($this->database->update('game', ['endtime' => $params['endtime']], ['id' => $params['alias']])) {
                 $response['success'] = 1;
+                $response['endtime'] = $params['endtime'];
             }
 
             // Return response
@@ -170,7 +179,7 @@ class Game extends API\Controller
                 $response = [
                     'success' => 1,
                     'game_id' => intval($game[0]['id']),
-                    'starttime' => strtotime($game[0]['starttime']),
+                    'starttime' => $game[0]['starttime'],
                     'hits' => [],
                     'device' => [],
                     'stats' => [
@@ -189,7 +198,7 @@ class Game extends API\Controller
                 foreach ($this->database->select('device_log', ['id', 'device', 'value', 'createdon'], ['value' => 'hit', 'createdon[>]' => $game[0]['starttime']]) as $hit) {
                     $devices_hit[] = $hit['device'];
                     $response['hits'][] = $hit;
-                    $response['stats']['last_hit'] = strtotime($hit['createdon']);
+                    $response['stats']['last_hit'] = $hit['createdon'];
                     $key = $this->searchForId($devices[$hit['device']], 'name', $response['device']);
                     if (!is_null($key)) {
                         $response['device'][$key]['hit']++;
@@ -201,8 +210,18 @@ class Game extends API\Controller
                         ];
                     }
                 }
+
+                // devices hit
                 $response['stats']['devices_hit'] = count(array_unique($devices_hit));
-                $response['stats']['total_time'] = $response['stats']['last_hit'] - strtotime($game[0]['starttime']);
+
+                // calculate total time
+                if(gettype($response['stats']['last_hit']) !== 'double') {
+                    $last_hit = new DateTime($response['stats']['last_hit']);
+                    $start_time = new DateTime($game[0]['starttime']);
+                    $response['stats']['total_time'] = abs($last_hit->format('U.u') - $start_time->format('U.u'));
+                } else {
+                    $response['stats']['total_time'] = 0;
+                }
             } else {
                 $response = $params;
                 $response['success'] = 0;

@@ -2,6 +2,7 @@
 
 namespace Robotjoosen\Lasertag\API\Controller;
 
+use DateTime;
 use Exception;
 use PDOStatement;
 use Robotjoosen\Lasertag\API;
@@ -115,12 +116,18 @@ class Device extends API\Controller
         try {
             $response = [];
 
+            // get start time
+            $t = microtime(true);
+            $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+            $d = new DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+
             // Get all send parameters
             $params = array_merge(
                 $this->getParameters($request),
                 $arguments
             );
 
+            // get device to log event
             $devices = $this->database->select('device', ['id', 'name', 'ip'], ["name" => $params['alias']]);
             if (!empty($devices)) {
 
@@ -128,7 +135,8 @@ class Device extends API\Controller
                 $response['device'] = $devices[0];
                 $response['event'] = [
                     'device' => $devices[0]['id'],
-                    'value' => 'hit'
+                    'value' => 'hit',
+                    'createdon' => $d->format("Y-m-d H:i:s.u")
                 ];
 
                 // add event to database

@@ -36,12 +36,12 @@
                                     <section class="text-center pt-4 pb-4">
                                         <h1>Laser Challenge</h1>
                                         <p class="lead">Super awesome lasertag game! Get ready to play!</p>
-                                        <p><button class="btn btn-primary" id="game-start">Start game</button></p>
+                                        <p><button class="btn btn-lg btn-primary" id="game-start">Start game</button></p>
                                     </section>
                                 </script>
                                 <script id="game-panel-play-tmpl" type="x-tmpl-mustache">
                                     <section class="text-center pt-2 pb-2">
-                                        <h1 class="mb-0">Game on!</h1>
+                                        <h1 class="display-2">Game on!</h1>
                                         <p class="display-1">{{timer}}</p>
                                         <table class="table">
                                             <thead>
@@ -66,13 +66,11 @@
                                 <script id="game-panel-end-tmpl" type="x-tmpl-mustache">
                                     <section class="text-center pt-2 pb-2">
                                         <div class="row align-items-center">
-                                            <div class="col-6">
-                                                <h1 class="mb-0">Game over!</h1>
-                                            </div>
-                                            <div class="col-6 text-right">
+                                            <div class="col text-right">
                                                 <button class="btn btn-primary" id="game-restart">Restart game</button>
                                             </div>
                                         </div>
+                                        <h1 class="display-2">Game over!</h1>
                                         <p class="display-1">{{stats.display_time}}</p>
                                         <table class="table">
                                             <thead>
@@ -99,11 +97,11 @@
                             <!-- Score -->
                             <div class="tab-pane fade show" id="tab-score" role="tabpanel" aria-labelledby="score-tab">
                                 <section class="pt-4 pb-4">
-                                    <h1>Score</h1>
-                                    <table class="table">
+                                    <h1>Top Score</h1>
+                                    <table id="score-table" class="table">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <th>ID</th>
                                                 <th>Hits</th>
                                                 <th>Devices</th>
                                                 <th>Time</th>
@@ -118,7 +116,7 @@
                                     <script id="games-row-tmpl" type="x-tmpl-mustache">
                                         {{#games}}
                                             <tr>
-                                                <td>{{name}}</td>
+                                                <th scope="row">{{id}}</td>
                                                 <td>{{hits}}</td>
                                                 <td>{{devices}}</td>
                                                 <td>{{display_time}}</td>

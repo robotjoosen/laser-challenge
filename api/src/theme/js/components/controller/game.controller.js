@@ -79,12 +79,20 @@ class GameController extends Controller {
 	 * Timer
 	 */
 	gameTimer() {
+
+		// set data
+		let data = this.stats;
+
+		// beautify timer
+		let d = new Date(this.timer * 1000);
+		data.timer = String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0') + ':' + Math.floor(d.getMilliseconds() / 10).toFixed(0).padStart(2, '0');
+
+		// render template
 		let template = document.getElementById('game-panel-play-tmpl');
 		let target = document.getElementById('game-panel');
-		let d = new Date(this.timer * 1000);
-		let data = this.stats;
-		data.timer = String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0') + ':' + Math.floor(d.getMilliseconds() / 10).toFixed(0).padStart(2, '0');
 		this.renderTmpl(target, template, data);
+
+		// add millisecond
 		this.timer += 0.01;
 	}
 
@@ -97,22 +105,36 @@ class GameController extends Controller {
 			Axios.get(`/api/game/${id}`)
 				.then(response => {
 					let data = response.data;
+
+					// beautify display time
 					let d = new Date(data.stats.total_time * 1000);
 					data.stats.display_time = String(d.getMinutes()).padStart(2, '0') + ':' + String(d.getSeconds()).padStart(2, '0') + ':' + Math.floor(d.getMilliseconds() / 10).toFixed(0).padStart(2, '0');
+
+					// set stats for general usage
 					this.stats = data;
-					if (response.data.stats.devices_hit === this.devices.length) {
+					console.log(this.stats);
+
+					if (data.stats.devices_hit === this.devices.length) {
+
+						// clear intervals
 						clearInterval(this.interval.timer);
 						clearInterval(this.interval.score);
-						let template = document.getElementById('game-panel-end-tmpl');
-						let target = document.getElementById('game-panel');
-						this.renderTmpl(target, template, data);
+
+						// register end time
 						Axios.post(`/api/game/${id}`, {'endtime': data.stats.last_hit})
 							.then(response => {
+								console.log(response.data);
 								console.debug('End of game is set');
 							})
 							.catch(error => {
 								console.warn(error);
 							});
+
+						// render output
+						let template = document.getElementById('game-panel-end-tmpl');
+						let target = document.getElementById('game-panel');
+						this.renderTmpl(target, template, data);
+						this.stats = [];
 
 					}
 				})
