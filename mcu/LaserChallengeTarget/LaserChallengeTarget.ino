@@ -22,6 +22,8 @@ ESP8266WiFiMulti WiFiMulti;
 ESP8266WebServer server(80);
 
 // Change these
+const char* SSID = "";
+const char* PASSWORD = "";
 const String device_name = "ESP8266-02";
 const String api_url = "http://192.168.178.82:8080/api/device/" + device_name;
 

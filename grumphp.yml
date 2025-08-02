@@ -1,0 +1,7 @@
+grumphp:
+    tasks:
+        composer: ~
+        phpstan: ~
+        securitychecker_symfony: ~
+        phpcsfixer:
+            config: '.php-cs-fixer.dist.php'
